@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Cal
 
 TOKEN = os.getenv("BOT_TOKEN", "")
 ADMIN_ID = int(os.getenv("ADMIN_ID", "1127663898"))
-ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "Winshade04")
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "Winshade").lstrip("@").strip()
 
 DATA_FILE = "data.json"
 
@@ -50,7 +50,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     keyboard = [
         [InlineKeyboardButton("📋 Features", callback_data="features")],
-        [InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"https://t.me/{ADMIN_USERNAME}")],
+        [InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"tg://resolve?domain={ADMIN_USERNAME}")],
     ]
     
     # Show forward button only for approved users
@@ -97,7 +97,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "📞 24/7 Support\n\n"
             "သုံးချင်ရင် Admin ကို ဆက်သွယ်ပါ 👇"
         )
-        keyboard = [[InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"https://t.me/{ADMIN_USERNAME}")]]
+        keyboard = [[InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"tg://resolve?domain={ADMIN_USERNAME}")]]
         await query.edit_message_text(features_text, reply_markup=InlineKeyboardMarkup(keyboard))
     
     elif query.data == "forward_guide":
@@ -145,7 +145,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         keyboard = [
             [InlineKeyboardButton("📋 Features", callback_data="features")],
-            [InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"https://t.me/{ADMIN_USERNAME}")],
+            [InlineKeyboardButton("📞 Admin ဆက်သွယ်ရန်", url=f"tg://resolve?domain={ADMIN_USERNAME}")],
         ]
         if str(user.id) in data.get("approved", []):
             keyboard.insert(1, [InlineKeyboardButton("📤 Forward Post", callback_data="forward_guide")])
